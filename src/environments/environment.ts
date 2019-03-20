@@ -3,7 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  estateInfo: "https://api.ouka.fi/v1/properties_basic_information",
+  yearInfo: "https://api.ouka.fi/v1/properties_consumption_yearly",
+  monthInfo: "https://api.ouka.fi/v1/properties_consumption_monthly",
+  heatingInfo: "https://api.ouka.fi/v1/properties_heating_systems",
+  useInfo: "https://api.ouka.fi/v1/properties_intended_use"
 };
 
 /*

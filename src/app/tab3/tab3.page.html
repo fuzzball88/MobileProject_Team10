@@ -6,4 +6,51 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content>
+  <ion-button (click)="getEstates()">
+    Get estates to console
+  </ion-button>
+  <ion-button (click)="getEstates(629101)">
+    Get estate details for 629101 to console
+  </ion-button>
+
+  <ion-button (click)="getYears()">
+    Get years to console
+  </ion-button>
+  <ion-button (click)="getYears(2016, null)">
+    Get years 2016 to console
+  </ion-button>
+  <ion-button (click)="getYears(null, 629101)">
+    Get year details for 629101 to console
+  </ion-button>
+  <ion-button (click)="getYears(2016, 629101)">
+    Get year details for 629101 to console
+  </ion-button>
+
+  <ion-button (click)="getMonths()">
+    Get months to console
+  </ion-button>
+  <ion-button (click)="getMonths(2016, null)">
+    Get months for 2016 to console
+  </ion-button>
+  <ion-button (click)="getMonths(null, 608901)">
+    Get months for estate to console
+  </ion-button>
+  <ion-button (click)="getMonths(2016, 608901)">
+    Get months for year and estate to console
+  </ion-button>
+
+  <ion-button (click)="getHeatings()">
+    Get heatings to console
+  </ion-button>
+  <ion-button (click)="getHeatings(614002)">
+    Get heating for property 614002 to console
+  </ion-button>
+
+  <ion-button (click)="getUses()">
+    Get uses info to console
+  </ion-button>
+  <ion-button (click)="getUses(151)">
+    Get uses info with id to console
+  </ion-button>
+</ion-content>
