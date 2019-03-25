@@ -53,4 +53,25 @@
   <ion-button (click)="getUses(151)">
     Get uses info with id to console
   </ion-button>
+  <ion-item>
+    <ion-input type="string" name="id" [(ngModel)]="id"></ion-input>
+    <ion-button (click)="getInfos()">
+      getInfos function
+    </ion-button>
+  </ion-item>
+
+  <ion-button
+    expand="block"
+    routerLink="/tabs/search-by-district"
+    routerDirection="root"
+  >
+    Go to searchDistrict
+  </ion-button>
+
+  <ion-list>
+    <ion-item *ngFor="let estate of modifiedData">
+      <p>{{ estate.property_name }}</p>
+      <p>{{ estate.property_id }}</p>
+    </ion-item>
+  </ion-list>
 </ion-content>

@@ -7,8 +7,12 @@ import { ConsumptionService } from "../consumption.service";
   styleUrls: ["tab3.page.scss"]
 })
 export class Tab3Page {
-  estates: any;
+  estateData: any;
+  modifiedData: any;
+  districts: string[] = [];
+  purposes: string[] = [];
   id: string;
+  inputId: string;
 
   constructor(private consumptionService: ConsumptionService) {}
 
@@ -17,8 +21,8 @@ export class Tab3Page {
     console.log(id);
     this.consumptionService.getEstates(id).then(
       data => {
-        this.estates = data;
-        console.log(this.estates);
+        this.estateData = data;
+        console.log(this.estateData);
       },
       err => {
         console.log(err);
@@ -34,8 +38,8 @@ export class Tab3Page {
     console.log(id);
     this.consumptionService.getYears(year, id).then(
       data => {
-        this.estates = data;
-        console.log(this.estates);
+        this.estateData = data;
+        console.log(this.estateData);
       },
       err => {
         console.log(err);
@@ -51,8 +55,8 @@ export class Tab3Page {
     console.log(id);
     this.consumptionService.getMonths(year, id).then(
       data => {
-        this.estates = data;
-        console.log(this.estates);
+        this.estateData = data;
+        console.log(this.estateData);
       },
       err => {
         console.log(err);
@@ -65,8 +69,8 @@ export class Tab3Page {
   getHeatings(id?: string) {
     this.consumptionService.getHeatings(id).then(
       data => {
-        this.estates = data;
-        console.log(this.estates);
+        this.estateData = data;
+        console.log(this.estateData);
       },
       err => {
         console.log(err);
@@ -79,12 +83,39 @@ export class Tab3Page {
   getUses(id?: string) {
     this.consumptionService.getUses(id).then(
       data => {
-        this.estates = data;
-        console.log(this.estates);
+        this.estateData = data;
+        console.log(this.estateData);
       },
       err => {
         console.log(err);
       }
     );
+  }
+
+  //Test filter function
+  filterData() {}
+
+  getInfos() {
+    let usageRaw = [];
+
+    for (let part of this.estateData) {
+      if (!this.districts.includes(part.district_name)) {
+        this.districts.push(part.district_name);
+      }
+      if (!usageRaw.includes(part.intended_use)) {
+        usageRaw.push(part.intended_use);
+      }
+    }
+    console.log(usageRaw);
+    usageRaw.forEach(element => {
+      if (element === null) {
+        element = "000 Muu käyttötarkoitus";
+      }
+      let i = element.substring(4);
+      this.purposes.push(i);
+      console.log(i);
+    });
+    console.log(this.districts);
+    console.log(this.purposes);
   }
 }
