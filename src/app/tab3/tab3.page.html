@@ -65,6 +65,15 @@
     routerLink="/tabs/search-by-district"
     routerDirection="root"
   >
+    Go to searchByDistrict
+  </ion-button>
+  <ion-input [(ngModel)]="value" clearInput>Enter input here</ion-input>
+  <p>Entered info = {{ value }}</p>
+  <ion-button
+    expand="block"
+    routerLink="/tabs/search-district"
+    routerDirection="root"
+  >
     Go to searchDistrict
   </ion-button>
 

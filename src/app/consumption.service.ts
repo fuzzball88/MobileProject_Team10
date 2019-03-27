@@ -11,9 +11,10 @@
 //Intended use: https://api.ouka.fi/v1/properties_intended_use
 //-Example: https://api.ouka.fi/v1/properties_basic_information?intended_use=like.221%
 
-import { Injectable } from "@angular/core";
+import { Injectable, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../environments/environment";
+import { Observable } from "rxjs";
 
 const ESTATE_INFO = environment.estateInfo;
 const YEAR_INFO = environment.yearInfo;
@@ -34,8 +35,37 @@ const useInfo: string = "https://api.ouka.fi/v1/properties_intended_use";
 @Injectable({
   providedIn: "root"
 })
-export class ConsumptionService {
+export class ConsumptionService implements OnInit {
+  activeDistrict: string = null;
+  activeEstate: string = null;
+  allDistricts: string[] = [];
+  allPurposes: string[] = [];
+  allEstates: any;
+
   constructor(private http: HttpClient) {}
+
+  ngOnInit() {}
+
+  public ResetActiveSelections() {
+    this.activeDistrict = null;
+    this.activeEstate = null;
+  }
+
+  GetObservableEstates(id?): Observable<any> {
+    let address = ESTATE_INFO;
+    if (id) {
+      address = ESTATE_INFO + "?property_id=eq." + id;
+    }
+    return this.http.get(address);
+  }
+
+  GetObservableDistrictEstates(id?): Observable<any> {
+    let address = ESTATE_INFO;
+    if (id) {
+      address = ESTATE_INFO + "?district_name=like." + id + "%";
+    }
+    return this.http.get(address);
+  }
 
   //Get estates
   //Without parameter return all estates
@@ -154,5 +184,46 @@ export class ConsumptionService {
         }
       );
     });
+  }
+
+  public getDistricts() {
+    let usageRaw = [];
+
+    for (let part of this.allEstates) {
+      if (!this.allDistricts.includes(part.district_name)) {
+        this.allDistricts.push(part.district_name);
+      }
+    }
+  }
+
+  public getPurposes() {
+    let usageRaw = [];
+
+    for (let part of this.allEstates) {
+      if (!usageRaw.includes(part.intended_use)) {
+        usageRaw.push(part.intended_use);
+      }
+    }
+    //console.log(usageRaw);
+    usageRaw.forEach(element => {
+      if (element === null) {
+        element = "000 Muu käyttötarkoitus";
+      }
+      let i = element.substring(4);
+      this.allPurposes.push(i);
+    });
+  }
+
+  public SetEstates(id?: string) {
+    //console.log(id);
+    this.getEstates(id).then(
+      data => {
+        this.allEstates = data;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+    console.log(this.allEstates);
   }
 }

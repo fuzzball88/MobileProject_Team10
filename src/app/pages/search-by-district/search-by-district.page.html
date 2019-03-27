@@ -1,9 +1,17 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>search-by-district</ion-title>
+    <ion-buttons>
+      <ion-back-button>Back</ion-back-button>
+      <ion-title>search by district</ion-title>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-
+  <p>{{ chosenDistrict }}</p>
+  <ion-card *ngFor="let estate of estateData">
+    <ion-card-content>
+      <ion-card-title>{{ estate.property_name }}</ion-card-title>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

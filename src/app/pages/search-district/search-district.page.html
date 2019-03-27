@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-back-button>Back</ion-back-button>
+      <ion-title>search-district</ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card *ngFor="let district of districts">
+    <ion-card-content>
+      <ion-card-title>{{ district }}</ion-card-title>
+      <ion-button
+        routerLink="/tabs/search-by-district"
+        routerDirection="forward"
+        (click)="UpdateActiveDistrict(district)"
+        >Choose</ion-button
+      >
+    </ion-card-content>
+  </ion-card>
+</ion-content>
