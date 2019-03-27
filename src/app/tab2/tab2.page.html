@@ -1,5 +1,13 @@
 <ion-header> </ion-header>
 
 <ion-content>
-
+  <p>{{ activeDistrict }}</p>
+  <ion-button
+    expand="block"
+    routerLink="/tabs/search-district"
+    routerDirection="root"
+    (click)="ResetSelections()"
+  >
+    Go to Search by district
+  </ion-button>
 </ion-content>

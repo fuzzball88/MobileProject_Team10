@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { ConsumptionService } from "../consumption.service";
+//import { NavController } from "@ionic/angular";
 
 @Component({
   selector: "app-tab3",
@@ -13,6 +14,7 @@ export class Tab3Page {
   purposes: string[] = [];
   id: string;
   inputId: string;
+  value: string = null;
 
   constructor(private consumptionService: ConsumptionService) {}
 

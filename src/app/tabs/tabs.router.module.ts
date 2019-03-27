@@ -34,6 +34,11 @@ const routes: Routes = [
           }
         ]
       },
+      {
+        path: "",
+        redirectTo: "/tabs/tab1",
+        pathMatch: "full"
+      },
       //My own add
       {
         path: "search-by-district",
@@ -55,12 +60,17 @@ const routes: Routes = [
           }
         ]
       },
-      //Own ends
       {
-        path: "",
-        redirectTo: "/tabs/tab1",
-        pathMatch: "full"
+        path: "search-district",
+        children: [
+          {
+            path: "",
+            loadChildren:
+              "../pages/search-district/search-district.module#SearchDistrictPageModule"
+          }
+        ]
       }
+      //Own ends
     ]
   },
   {
