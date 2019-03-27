@@ -45,6 +45,16 @@ const routes: Routes = [
           }
         ]
       },
+      {
+        path: "estate-info",
+        children: [
+          {
+            path: "",
+            loadChildren:
+              "../pages/estate-info/estate-info.module#EstateInfoPageModule"
+          }
+        ]
+      },
       //Own ends
       {
         path: "",

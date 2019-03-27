@@ -7,7 +7,8 @@ const routes: Routes = [
     path: "search-by-district",
     loadChildren:
       "./pages/search-by-district/search-by-district.module#SearchByDistrictPageModule"
-  }
+  },  { path: 'estate-info', loadChildren: './pages/estate-info/estate-info.module#EstateInfoPageModule' }
+
 ];
 @NgModule({
   imports: [
