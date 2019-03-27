@@ -17,7 +17,7 @@ export class SearchByDistrictPage implements OnInit {
 
   ngOnInit() {
     //this.chosenDistrict = this.consumptionService.activeDistrict;
-    //this.GetObjEstatesByDistrict(this.consumptionService.activeDistrict);
+    this.GetObjEstatesByDistrict(this.consumptionService.activeDistrict);
     //this.estateData = this.consumptionService.allEstates;
     //https://api.ouka.fi/v1/properties_basic_information?district_name=like.Ylikiiminki%
   }
@@ -29,5 +29,10 @@ export class SearchByDistrictPage implements OnInit {
         console.log(data);
         this.estateData = data;
       });
+  }
+
+  UpdateActiveEstate(id: string) {
+    this.consumptionService.activeEstateId = id;
+    this.consumptionService.GetObjEstate(id);
   }
 }

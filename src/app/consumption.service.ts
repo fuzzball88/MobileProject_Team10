@@ -37,7 +37,8 @@ const useInfo: string = "https://api.ouka.fi/v1/properties_intended_use";
 })
 export class ConsumptionService implements OnInit {
   activeDistrict: string = null;
-  activeEstate: string = null;
+  activeEstateId: string = null;
+  activeEstate: any;
   allDistricts: string[] = [];
   allPurposes: string[] = [];
   allEstates: any;
@@ -48,7 +49,13 @@ export class ConsumptionService implements OnInit {
 
   public ResetActiveSelections() {
     this.activeDistrict = null;
-    this.activeEstate = null;
+    this.activeEstateId = null;
+  }
+
+  GetObjEstate(id: string) {
+    this.GetObservableEstates(id).subscribe(data => {
+      this.activeEstate = data;
+    });
   }
 
   GetObservableEstates(id?): Observable<any> {
@@ -63,6 +70,18 @@ export class ConsumptionService implements OnInit {
     let address = ESTATE_INFO;
     if (id) {
       address = ESTATE_INFO + "?district_name=like." + id + "%";
+    }
+    return this.http.get(address);
+  }
+
+  public GetObservableYears(year?: string, id?: string): Observable<any> {
+    let address = YEAR_INFO;
+    if (year && id) {
+      address += "?year=eq." + year + "&property_id=eq." + id;
+    } else if (id && !year) {
+      address += "?property_id=eq." + id;
+    } else if (year && !id) {
+      address += "?year=eq." + year;
     }
     return this.http.get(address);
   }

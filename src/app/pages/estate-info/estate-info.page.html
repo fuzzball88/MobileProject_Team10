@@ -5,39 +5,47 @@
 </ion-header>
 
 <ion-content padding>
-<ion-label>
-  <ion-title>Building name (property_name)</ion-title>
-</ion-label>
-<ion-label>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>General details:</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <p>Property-ID: (property_id)</p><br>
-      <p>Intended use: (intended_use)</p><br>
-      <p>District name: (district_name)</p><br>
-      <p>Street address: (property_address)</p><br>
-      <p>Postal code: (postal_code)</p><br>
-      <p>Size: (totalfloorarea)</p><br>
-      <p>Building year: (year_built)</p><br>
-      <p>Renovation year: (year_renovated)</p>      
-    </ion-card-content>
+  <ion-label>
+    <ion-title *ngFor="let estate of selectedEstate">{{
+      estate?.property_name
+    }}</ion-title>
+  </ion-label>
+  <ion-label>
+    <ion-card *ngFor="let estate of selectedEstate">
+      <ion-card-header>
+        <ion-card-title>General details:</ion-card-title>
+      </ion-card-header>
 
-  </ion-card>
+      <ion-card-content>
+        <p>Property-ID: {{ estate?.property_id }}</p>
+        <br />
+        <p>Intended use: {{ estate?.intended_use }}</p>
+        <br />
+        <p>District name: {{ estate?.district_name }}</p>
+        <br />
+        <p>Street address: {{ estate?.property_address }}</p>
+        <br />
+        <p>Postal code: {{ estate?.postal_code }}</p>
+        <br />
+        <p>Size: {{ estate?.totalfloorarea }}</p>
+        <br />
+        <p>Building year: {{ estate?.year_built }}</p>
+        <br />
+        <p>Renovation year: {{ estate?.year_renovated }}</p>
+      </ion-card-content>
+    </ion-card>
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Consumption data:</ion-card-title>
-    </ion-card-header>
-    <p button tappable (click)="expanded = !expanded">
-      Year: (year)</p>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Consumption data:</ion-card-title>
+      </ion-card-header>
+      <p button tappable (click)="expanded = !expanded">
+        Year: (year)
+      </p>
 
       <ion-card-content *ngIf="expanded">
         Here the card content
       </ion-card-content>
-
-  </ion-card>
-
-</ion-label>
+    </ion-card>
+  </ion-label>
 </ion-content>
