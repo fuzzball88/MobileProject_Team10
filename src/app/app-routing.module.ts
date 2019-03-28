@@ -2,8 +2,12 @@ import { NgModule } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 
 const routes: Routes = [
-  { path: "", loadChildren: "./tabs/tabs.module#TabsPageModule" }
-  /*
+  { path: "", loadChildren: "./tabs/tabs.module#TabsPageModule" },
+  {
+    path: "search-district",
+    loadChildren:
+      "./pages/search-district/search-district.module#SearchDistrictPageModule"
+  },
   {
     path: "search-by-district",
     loadChildren:
@@ -13,7 +17,6 @@ const routes: Routes = [
     path: "estate-info",
     loadChildren: "./pages/estate-info/estate-info.module#EstateInfoPageModule"
   }
-  */
 ];
 @NgModule({
   imports: [

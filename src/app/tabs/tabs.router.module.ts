@@ -22,7 +22,39 @@ const routes: Routes = [
           {
             path: "",
             loadChildren: "../tab2/tab2.module#Tab2PageModule"
+          },
+          //Test start
+          {
+            path: "search-district",
+            children: [
+              {
+                path: "",
+                loadChildren:
+                  "../pages/search-district/search-district.module#SearchDistrictPageModule"
+              },
+              {
+                path: "search-by-district",
+                children: [
+                  {
+                    path: "",
+                    loadChildren:
+                      "../pages/search-by-district/search-by-district.module#SearchByDistrictPageModule"
+                  },
+                  {
+                    path: "estate-info",
+                    children: [
+                      {
+                        path: "",
+                        loadChildren:
+                          "../pages/estate-info/estate-info.module#EstateInfoPageModule"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
           }
+          ///
         ]
       },
       {
