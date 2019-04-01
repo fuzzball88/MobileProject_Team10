@@ -1,13 +1,24 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild, ElementRef, OnInit } from "@angular/core";
 import { ConsumptionService } from "../consumption.service";
 //import { NavController } from "@ionic/angular";
+import leaflet from "leaflet";
+import { OpenStreetMapProvider } from "leaflet-geosearch";
+
+// setup
+const provider = new OpenStreetMapProvider();
 
 @Component({
   selector: "app-tab3",
   templateUrl: "tab3.page.html",
   styleUrls: ["tab3.page.scss"]
 })
-export class Tab3Page {
+export class Tab3Page implements OnInit {
+  @ViewChild("map") mapContainer: ElementRef;
+  map: any;
+  myToken: string =
+    "pk.eyJ1IjoiZnV6emJhbGw4OCIsImEiOiJjanRzaWFvMmswd2VnNGRvN29paTJtaHQzIn0.rwgnQNkKUE2I5YC75g3nqw";
+  locations: string[] = [];
+
   estateData: any;
   modifiedData: any;
   districts: string[] = [];
@@ -15,8 +26,13 @@ export class Tab3Page {
   id: string;
   inputId: string;
   value: string = null;
+  test: string = "Finland";
 
   constructor(private consumptionService: ConsumptionService) {}
+
+  ngOnInit() {}
+
+  ionViewWillEnter() {}
 
   //Get all estates or one if id is given
   getEstates(id?: string) {

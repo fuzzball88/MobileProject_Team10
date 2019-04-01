@@ -16,7 +16,8 @@ const routes: Routes = [
   {
     path: "estate-info",
     loadChildren: "./pages/estate-info/estate-info.module#EstateInfoPageModule"
-  }
+  },  { path: 'maptest', loadChildren: './pages/maptest/maptest.module#MaptestPageModule' }
+
 ];
 @NgModule({
   imports: [

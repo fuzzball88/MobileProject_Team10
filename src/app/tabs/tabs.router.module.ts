@@ -63,6 +63,16 @@ const routes: Routes = [
           {
             path: "",
             loadChildren: "../tab3/tab3.module#Tab3PageModule"
+          },
+          {
+            path: "maptest",
+            children: [
+              {
+                path: "",
+                loadChildren:
+                  "../pages/maptest/maptest.module#MaptestPageModule"
+              }
+            ]
           }
         ]
       },
