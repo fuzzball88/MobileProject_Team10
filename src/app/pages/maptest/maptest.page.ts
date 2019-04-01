@@ -14,17 +14,50 @@ export class MaptestPage implements OnInit {
   locations: string[] = [];
   constructor() {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ionViewWillLeave() {
+    this.map.off();
+    this.map.remove();
+  }
+
+  ionViewWillEnter() {
     this.loadmap();
   }
 
   loadmap() {
     this.map = leaflet.map("map").fitWorld();
     leaflet
-      .tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attributions: "www.tphangout.com",
-        maxZoom: 18
-      })
+      .tileLayer(
+        "https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}",
+        {
+          attribution:
+            'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 18,
+          id: "mapbox.streets",
+          accessToken: this.myToken
+        }
+      )
       .addTo(this.map);
+
+    this.map
+      .locate({
+        setView: true,
+        maxZoom: 10
+      })
+      .on("locationfound", e => {
+        console.log("found you");
+        let markerGroup = leaflet.featureGroup();
+        let marker: any = leaflet
+          .marker([e.latitude, e.longitude])
+          .on("click", () => {
+            alert("Marker clicked");
+          });
+        markerGroup.addLayer(marker);
+        this.map.addLayer(markerGroup);
+      })
+      .on("locationerror", err => {
+        alert(err.message);
+      });
   }
 }
