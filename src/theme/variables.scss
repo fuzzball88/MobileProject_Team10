@@ -3,6 +3,23 @@
 
 /** Ionic CSS Variables **/
 :root {
+  /** own colors**/
+  --ion-color-purple: #99739f;
+  --ion-color-blue: #8c7ca8; 
+  --ion-color-orange: #fbc8a4;
+  --ion-color-rosa: #fbf4f1;
+  --ion-color-grey: #4e3b49;
+  --ion-color-darkrosa: #fbc8a4; 
+  --ion-color-lightblue: #d0cfe9; 
+  --ion-color-lightblue2: #e6e6ef; 
+    
+
+/** own fonts**/ 
+  --ion-font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+  /**own padding**/
+  --ion-padding: 16px; 
+
   /** primary **/
   --ion-color-primary: #3880ff;
   --ion-color-primary-rgb: 56, 128, 255;
