@@ -1,5 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import leaflet from "leaflet";
+//GeoSearch import
+import { OpenStreetMapProvider } from "leaflet-geosearch";
+
+const provider = new OpenStreetMapProvider();
 
 @Component({
   selector: "app-maptest",
@@ -12,6 +16,7 @@ export class MaptestPage implements OnInit {
   myToken: string =
     "pk.eyJ1IjoiZnV6emJhbGw4OCIsImEiOiJjanRzaWFvMmswd2VnNGRvN29paTJtaHQzIn0.rwgnQNkKUE2I5YC75g3nqw";
   locations: string[] = [];
+  testAddress: string = "Etupääntie 2, oulu";
   constructor() {}
 
   ngOnInit() {}
@@ -23,6 +28,25 @@ export class MaptestPage implements OnInit {
 
   ionViewWillEnter() {
     this.loadmap();
+  }
+
+  searchAddress() {
+    provider.search({ query: this.testAddress }).then(function(result) {
+      // do something with result;
+      console.log(result);
+      for (let address of result) {
+        console.log(address.x);
+        console.log(address.y);
+        console.log(address.label);
+        /*
+        leaflet
+          .marker([result.x, result.y])
+          .addTo(this.map)
+          .bindPopup(result.label)
+          .openPopup();
+          */
+      }
+    });
   }
 
   loadmap() {
