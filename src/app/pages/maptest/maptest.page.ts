@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import leaflet from "leaflet";
 //GeoSearch import
 import { OpenStreetMapProvider } from "leaflet-geosearch";
+import { ConsumptionService } from "../../consumption.service";
 
 const provider = new OpenStreetMapProvider();
 
@@ -17,9 +18,14 @@ export class MaptestPage implements OnInit {
     "pk.eyJ1IjoiZnV6emJhbGw4OCIsImEiOiJjanRzaWFvMmswd2VnNGRvN29paTJtaHQzIn0.rwgnQNkKUE2I5YC75g3nqw";
   locations: string[] = [];
   testAddress: string = "Etupääntie 2, oulu";
-  constructor() {}
+  testResult: any;
+  testArray: string[] = [];
 
-  ngOnInit() {}
+  constructor(private consumptionService: ConsumptionService) {}
+
+  ngOnInit() {
+    this.GetObjEstates();
+  }
 
   ionViewWillLeave() {
     this.map.off();
@@ -30,23 +36,114 @@ export class MaptestPage implements OnInit {
     this.loadmap();
   }
 
-  searchAddress() {
-    provider.search({ query: this.testAddress }).then(function(result) {
-      // do something with result;
-      console.log(result);
-      for (let address of result) {
-        console.log(address.x);
-        console.log(address.y);
-        console.log(address.label);
-        /*
-        leaflet
-          .marker([result.x, result.y])
-          .addTo(this.map)
-          .bindPopup(result.label)
-          .openPopup();
-          */
-      }
+  GetObjEstates() {
+    this.consumptionService.GetObservableEstates().subscribe(data => {
+      console.log(data);
+      this.consumptionService.allEstates = data;
     });
+  }
+
+  searchAddress() {
+    console.log(this.searchEstate());
+    //this.testArray.push(this.searchEstate());
+    //this.testResult = this.searchEstate();
+  }
+
+  async estateArrays() {
+    let estateData = {};
+    //console.log(this.consumptionService.allEstates);
+
+    let coordinate = await this.searchEstateSync(
+      this.consumptionService.allEstates[0].property_address +
+        " " +
+        this.consumptionService.allEstates[0].postal_code +
+        " " +
+        this.consumptionService.allEstates[0].postal_area
+    );
+
+    estateData[
+      "property_id"
+    ] = this.consumptionService.allEstates[0].property_id;
+    estateData[
+      "property_name"
+    ] = this.consumptionService.allEstates[0].property_name;
+    estateData[
+      "propert_address"
+    ] = this.consumptionService.allEstates[0].property_address;
+    estateData[
+      "postal_code"
+    ] = this.consumptionService.allEstates[0].postal_code;
+    estateData[
+      "postal_area"
+    ] = this.consumptionService.allEstates[0].postal_area;
+    estateData["x"] = coordinate[0].x;
+    estateData["y"] = coordinate[0].y;
+
+    console.log(estateData);
+
+    //Gets info to testArray with index
+    /*
+    this.testArray.push(
+      this.consumptionService.allEstates[0].property_id,
+      this.consumptionService.allEstates[0].property_name,
+      this.consumptionService.allEstates[0].property_address,
+      this.consumptionService.allEstates[0].postal_code,
+      this.consumptionService.allEstates[0].postal_area,
+      coordinate[0].x,
+      coordinate[0].y
+    );
+    console.log(this.testArray);
+*/
+
+    //Gets info ok
+    /*
+    this.consumptionService.allEstates.forEach(async element => {
+      console.log(element.property_id);
+      console.log(element.property_name);
+      console.log(element.property_address);
+      console.log(element.postal_code);
+      console.log(element.postal_area);
+      let coordinate = await this.searchEstateSync(
+        element.property_address +
+          " " +
+          element.postal_code +
+          " " +
+          element.postal_area
+      );
+      console.log(coordinate);
+    });
+    */
+  }
+
+  async searchEstate() {
+    provider
+      .search({ query: "Etupääntie 2, oulu" })
+      .then(async function(result) {
+        return await result;
+        console.log(result);
+      });
+  }
+
+  async searchEstateSync(address) {
+    const results = await provider.search({ query: address });
+    //this.testResult = results;
+    //console.log(results);
+    return results;
+    //this.testArray.push(results);
+  }
+
+  async markAddress() {
+    //console.log(this.searchEstateSync(this.testAddress));
+    let details = await this.searchEstateSync(this.testAddress);
+    console.log("After");
+    console.log(details);
+    console.log(details[0].x);
+    console.log(details[0].y);
+
+    //console.log(this.testArray);
+    //console.log(this.testArray);
+    //console.log(this.testResult);
+    //leaflet.marker([22, 22]).addTo(this.map);
   }
 
   loadmap() {

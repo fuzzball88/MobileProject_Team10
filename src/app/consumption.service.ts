@@ -39,6 +39,7 @@ export class ConsumptionService implements OnInit {
   activeDistrict: string = null;
   activeEstateId: string = null;
   activeEstate: any;
+  mapEstates: string[] = [];
   allDistricts: string[] = [];
   allPurposes: string[] = [];
   allEstates: any;
