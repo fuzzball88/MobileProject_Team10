@@ -3,11 +3,11 @@ import { ConsumptionService } from "../../consumption.service";
 import { ActivatedRoute } from "@angular/router";
 
 @Component({
-  selector: "app-estate-info",
-  templateUrl: "./estate-info.page.html",
-  styleUrls: ["./estate-info.page.scss"]
+  selector: "app-estate-info-id",
+  templateUrl: "./estate-info-id.page.html",
+  styleUrls: ["./estate-info-id.page.scss"]
 })
-export class EstateInfoPage implements OnInit {
+export class EstateInfoIdPage implements OnInit {
   urlId = null;
   selectedEstate: any;
   yearsConsumption: any;

@@ -71,6 +71,16 @@ const routes: Routes = [
                 path: "",
                 loadChildren:
                   "../pages/maptest/maptest.module#MaptestPageModule"
+              },
+              {
+                path: "estate-info-id/:id",
+                children: [
+                  {
+                    path: "",
+                    loadChildren:
+                      "../pages/estate-info-id/estate-info-id.module#EstateInfoIdPageModule"
+                  }
+                ]
               }
             ]
           }
