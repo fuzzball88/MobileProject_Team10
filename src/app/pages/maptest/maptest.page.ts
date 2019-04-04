@@ -1,3 +1,5 @@
+//CORS FIX DONE IN MobileProject_Team10\node_modules\leaflet-geosearch\lib\providers\openStreetMapProvider.js
+// "https://cors-anywhere.herokuapp.com/" ADDED to provider
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import leaflet from "leaflet";
 //GeoSearch import
@@ -5,6 +7,8 @@ import { OpenStreetMapProvider } from "leaflet-geosearch";
 import { ConsumptionService } from "../../consumption.service";
 
 const provider = new OpenStreetMapProvider();
+
+const CORS_FIX = "https://cors-anywhere.herokuapp.com/";
 
 @Component({
   selector: "app-maptest",
@@ -19,7 +23,7 @@ export class MaptestPage implements OnInit {
   locations: string[] = [];
   testAddress: string = "Etupääntie 2, oulu";
   testResult: any;
-  testArray: string[] = [];
+  testArray: any = [];
 
   constructor(private consumptionService: ConsumptionService) {}
 
@@ -34,6 +38,8 @@ export class MaptestPage implements OnInit {
 
   ionViewWillEnter() {
     this.loadmap();
+    //this.createMapArray();
+    //this.createMarkers();
   }
 
   GetObjEstates() {
@@ -49,10 +55,34 @@ export class MaptestPage implements OnInit {
     //this.testResult = this.searchEstate();
   }
 
+  async createMapArray() {
+    this.consumptionService.allEstates.forEach(async element => {
+      let estateData = {};
+      let coordinate = await this.searchEstateSync(
+        element.property_address +
+          " " +
+          element.postal_code +
+          " " +
+          element.postal_area
+      );
+
+      estateData["property_id"] = element.property_id;
+      estateData["property_name"] = element.property_name;
+      estateData["propert_address"] = element.property_address;
+      estateData["postal_code"] = element.postal_code;
+      estateData["postal_area"] = element.postal_area;
+      estateData["x"] = coordinate[0].x;
+      estateData["y"] = coordinate[0].y;
+
+      //console.log(estateData);
+      this.testArray.push(estateData);
+      //console.log(this.testArray);
+    });
+    console.log(this.testArray);
+  }
+
   async estateArrays() {
     let estateData = {};
-    //console.log(this.consumptionService.allEstates);
-
     let coordinate = await this.searchEstateSync(
       this.consumptionService.allEstates[0].property_address +
         " " +
@@ -79,7 +109,9 @@ export class MaptestPage implements OnInit {
     estateData["x"] = coordinate[0].x;
     estateData["y"] = coordinate[0].y;
 
-    console.log(estateData);
+    //console.log(estateData);
+    this.testArray.push(estateData);
+    //console.log(this.testArray);
 
     //Gets info to testArray with index
     /*
@@ -132,18 +164,57 @@ export class MaptestPage implements OnInit {
     //this.testArray.push(results);
   }
 
+  testClick() {
+    console.log("Test button is clicked");
+  }
+
   async markAddress() {
     //console.log(this.searchEstateSync(this.testAddress));
     let details = await this.searchEstateSync(this.testAddress);
+
     console.log("After");
     console.log(details);
     console.log(details[0].x);
     console.log(details[0].y);
 
+    await leaflet
+      .marker([65.0254963, 25.5621585])
+      .addTo(this.map)
+      .bindPopup(
+        '<h1>Name</h1></br><ion-button class="merch-link" href="/tabs/tab2/search-district/search-by-district/" data-merchId="200">Open</ion-button>'
+        //'<a class="merch-link" href="/tabs/tab2/search-district/search-by-district/" data-merchId="200">Open</a>'
+        //'<a class="merch-link" href="www.iltalehti.fi" data-merchId="200">Show</a>'
+      )
+      .on("click", this.onClick);
+
     //console.log(this.testArray);
     //console.log(this.testArray);
     //console.log(this.testResult);
     //leaflet.marker([22, 22]).addTo(this.map);
+  }
+
+  onClick() {
+    console.log("Estate clicked");
+  }
+
+  createMarkers() {
+    this.testArray.forEach(element => {
+      var estate = "test";
+      console.log(estate);
+      //leaflet.marker([element.y, element.x]).addTo(this.map);
+      leaflet
+        .marker([element.y, element.x])
+        .addTo(this.map)
+        .bindPopup(
+          "<h1>" +
+            element.property_name +
+            '</h1></br><ion-button class="marker-link" href="/tabs/tab2/search-district/search-by-district/" data-merchId="200">Open</ion-button>'
+        )
+        .on("click", this.onClick);
+      //.openPopup();
+      //Popuptesting
+      //leaflet.marker.bindPopup(element.property_name).openPopup();
+    });
   }
 
   loadmap() {
@@ -172,7 +243,7 @@ export class MaptestPage implements OnInit {
         let marker: any = leaflet
           .marker([e.latitude, e.longitude])
           .on("click", () => {
-            alert("Marker clicked");
+            alert("You are here");
           });
         markerGroup.addLayer(marker);
         this.map.addLayer(markerGroup);
