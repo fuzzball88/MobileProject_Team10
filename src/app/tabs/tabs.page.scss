@@ -4,4 +4,25 @@
     width:100%;
   }
 
+  .tab-selected {
+    background-color: var(--ion-color-purple) !important; 
+  }
+
+  .logo {
+    font-size:150px;
+  }
+
+  .icon {
+    color: var(--ion-color-lightblue); 
+  }
+
+  .label {
+    color: var(--ion-color-lightblue); 
+  }
+
+.tab-bar {
+  background-color: var(--ion-color-grey); 
+  --ripple-color: var(--ion-color-lightblue); 
+ }
+
   
