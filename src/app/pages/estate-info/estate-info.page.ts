@@ -7,7 +7,7 @@ import { ActivatedRoute } from "@angular/router";
   templateUrl: "./estate-info.page.html",
   styleUrls: ["./estate-info.page.scss"]
 })
-export class EstateInfoPage implements OnInit {
+export class EstateInfoPage {
   urlId = null;
   estateId: string = null;
   selectedEstate: any;
@@ -21,47 +21,73 @@ export class EstateInfoPage implements OnInit {
     private activatedRoute: ActivatedRoute
   ) {}
 
+  /*
   ngOnInit() {
+    console.log("ngOnInit used");
     this.urlId = this.activatedRoute.snapshot.paramMap.get("id");
     if (!this.urlId) {
       this.estateId = this.consumptionService.activeEstateId;
     } else {
       this.estateId = this.urlId;
     }
+    console.log(this.estateId);
+    this.consumptionService.activeEstateId = this.estateId;
+    this.GetObjEstates(this.estateId);
+    this.GetObjConsumption(null, this.estateId);
+    this.UpdateYears();
+  }*/
+
+  ionViewWillEnter() {
+    console.log("ionViewWillEnter used");
+    this.urlId = this.activatedRoute.snapshot.paramMap.get("id");
+    if (!this.urlId) {
+      this.estateId = this.consumptionService.activeEstateId;
+    } else {
+      this.estateId = this.urlId;
+    }
+    console.log(this.estateId);
+    this.consumptionService.activeEstateId = this.estateId;
     this.GetObjEstates(this.estateId);
     this.GetObjConsumption(null, this.estateId);
     this.UpdateYears();
   }
-  ionViewWillEnter() {
-    this.urlId = this.activatedRoute.snapshot.paramMap.get("id");
-    if (!this.urlId) {
-      this.estateId = this.consumptionService.activeEstateId;
-    } else {
-      this.estateId = this.urlId;
-    }
-    this.GetObjEstates(this.estateId);
-    this.GetObjConsumption(null, this.estateId);
-    this.UpdateYears();
+
+  ionViewWillLeave() {
+    /*
+    this.urlId = null;
+    this.estateId = null;
+    this.selectedEstate = null;
+    this.yearsConsumption = null;
+    this.iterationYears = null;
+    this.iterationYear = null;
+    this.years = null;
+    */
+  }
+
+  printWanted() {
+    console.log(this.consumptionService.activeEstateYearlyConsumption);
   }
 
   GetObjEstates(id: string) {
     this.consumptionService.GetObservableEstates(id).subscribe(data => {
       this.selectedEstate = data;
-      //console.log(this.selectedEstate);
+      console.log(this.selectedEstate);
     });
   }
 
-  GetObjConsumption(year: string, id: string) {
-    this.consumptionService.GetObservableYears(year, id).subscribe(data => {
-      this.yearsConsumption = data;
-      //console.log(this.yearsConsumption);
-    });
+  async GetObjConsumption(year: string, id: string) {
+    await this.consumptionService
+      .GetObservableYears(year, id)
+      .subscribe(data => {
+        this.consumptionService.activeEstateYearlyConsumption = data;
+        //console.log(this.yearsConsumption);
+      });
   }
 
-  UpdateYears() {
+  async UpdateYears() {
     //let estateYearConsumption = {};
-    console.log(this.yearsConsumption);
-    for (let part of this.yearsConsumption) {
+    await console.log(this.consumptionService.activeEstateYearlyConsumption);
+    for (let part of this.consumptionService.activeEstateYearlyConsumption) {
       if (!this.iterationYears.includes(part.year)) {
         this.iterationYears.push(part.year);
         /*

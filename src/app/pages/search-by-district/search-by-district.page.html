@@ -15,7 +15,10 @@
       <p>{{ estate.property_id }}</p>
       <ion-button
         (click)="UpdateActiveEstate(estate.property_id)"
-        routerLink="/tabs/tab2/search-district/search-by-district/estate-info"
+        [routerLink]="[
+          '/tabs/tab2/search-district/search-by-district/estate-info/',
+          estate.property_id
+        ]"
         routerDirection="forward"
         >Check</ion-button
       >
