@@ -49,7 +49,7 @@ export class EstateInfoPage {
     this.consumptionService.activeEstateId = this.estateId;
     this.GetObjEstates(this.estateId);
     this.GetObjConsumption(null, this.estateId);
-    this.UpdateYears();
+    //this.UpdateYears();
   }
 
   ionViewWillLeave() {
@@ -68,13 +68,29 @@ export class EstateInfoPage {
     console.log(this.consumptionService.activeEstateYearlyConsumption);
   }
 
+  async GetObjEstates(id: string) {
+    this.selectedEstate = await this.consumptionService.getEstates(id);
+    console.log(this.selectedEstate);
+  }
+  /*
   GetObjEstates(id: string) {
     this.consumptionService.GetObservableEstates(id).subscribe(data => {
       this.selectedEstate = data;
       console.log(this.selectedEstate);
     });
   }
+  */
 
+  async GetObjConsumption(year: string, id: string) {
+    this.consumptionService.activeEstateYearlyConsumption = await this.consumptionService.getYears(
+      year,
+      id
+    );
+    console.log("GetObjConsumption used");
+    console.log(this.consumptionService.activeEstateYearlyConsumption);
+    this.UpdateYears();
+  }
+  /*
   async GetObjConsumption(year: string, id: string) {
     await this.consumptionService
       .GetObservableYears(year, id)
@@ -82,11 +98,11 @@ export class EstateInfoPage {
         this.consumptionService.activeEstateYearlyConsumption = data;
         //console.log(this.yearsConsumption);
       });
-  }
+  } */
 
-  async UpdateYears() {
+  UpdateYears() {
     //let estateYearConsumption = {};
-    await console.log(this.consumptionService.activeEstateYearlyConsumption);
+    console.log(this.consumptionService.activeEstateYearlyConsumption);
     for (let part of this.consumptionService.activeEstateYearlyConsumption) {
       if (!this.iterationYears.includes(part.year)) {
         this.iterationYears.push(part.year);

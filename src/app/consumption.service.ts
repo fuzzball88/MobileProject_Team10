@@ -54,8 +54,8 @@ export class ConsumptionService implements OnInit {
     this.activeEstateId = null;
   }
 
-  GetObjEstate(id: string) {
-    this.GetObservableEstates(id).subscribe(data => {
+  async GetObjEstate(id: string) {
+    await this.GetObservableEstates(id).subscribe(data => {
       this.activeEstate = data;
     });
   }
@@ -91,12 +91,12 @@ export class ConsumptionService implements OnInit {
   //Get estates
   //Without parameter return all estates
   //With id parameter certain estate details
-  public getEstates(id?: string) {
+  async getEstates(id?: string) {
     let address = ESTATE_INFO;
     if (id) {
       address = ESTATE_INFO + "?property_id=eq." + id;
     }
-    return new Promise((resolve, reject) => {
+    return await new Promise((resolve, reject) => {
       this.http.get(address).subscribe(
         data => {
           //console.log(data)
@@ -114,7 +114,7 @@ export class ConsumptionService implements OnInit {
   //Without parameter return all year details
   //With id parameter certain estate details with all years
   //With year get all estates info in that year
-  public getYears(year?: string, id?: string) {
+  async getYears(year?: string, id?: string) {
     let address = YEAR_INFO;
     if (year && id) {
       address += "?year=eq." + year + "&property_id=eq." + id;
@@ -124,7 +124,7 @@ export class ConsumptionService implements OnInit {
       address += "?year=eq." + year;
     }
 
-    return new Promise((resolve, reject) => {
+    return await new Promise((resolve, reject) => {
       this.http.get(address).subscribe(
         data => {
           //console.log(data)
@@ -142,7 +142,7 @@ export class ConsumptionService implements OnInit {
   //Without parameter return all month details
   //With id parameter certain estate details with all years
   //With year get all estates info in that year
-  public getMonths(year?: string, id?: string) {
+  async getMonths(year?: string, id?: string) {
     let address = MONTH_INFO;
     if (year && id) {
       address += "?year=eq." + year + "&property_id=eq." + id;
@@ -151,7 +151,7 @@ export class ConsumptionService implements OnInit {
     } else if (year && !id) {
       address += "?year=eq." + year;
     }
-    return new Promise((resolve, reject) => {
+    return await new Promise((resolve, reject) => {
       this.http.get(address).subscribe(
         data => {
           //console.log(data)
