@@ -210,7 +210,7 @@ export class MaptestPage implements OnInit {
             element.property_name +
             '</h1></br><ion-button class="marker-link" href="/tabs/tab3/maptest/estate-info-id/' +
             element.property_id +
-            '" data-merchId="200">Open</ion-button>'
+            '">Open</ion-button>'
         )
         .on("click", this.onClick);
       //.openPopup();

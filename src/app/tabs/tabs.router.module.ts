@@ -81,6 +81,16 @@ const routes: Routes = [
                       "../pages/estate-info-id/estate-info-id.module#EstateInfoIdPageModule"
                   }
                 ]
+              },
+              {
+                path: "estate-info/:id",
+                children: [
+                  {
+                    path: "",
+                    loadChildren:
+                      "../pages/estate-info/estate-info.module#EstateInfoPageModule"
+                  }
+                ]
               }
             ]
           }

@@ -2,6 +2,13 @@
   <ion-toolbar>
     <ion-buttons>
       <ion-back-button>Back</ion-back-button>
+      <ion-button
+        expand="block"
+        routerLink="/tabs/tab3/maptest"
+        routerDirection="forward"
+      >
+        Back
+      </ion-button>
       <ion-title>Estate details Id{{ urlId }}</ion-title>
     </ion-buttons>
   </ion-toolbar>
@@ -38,7 +45,28 @@
       </ion-card-content>
     </ion-card>
 
-    <ion-card>
+    <ion-card *ngFor="let year of years">
+      <ion-card-header>
+        <ion-card-title>Vuosi {{ year[0].year }}</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content *ngFor="let part of year">
+        <p *ngIf="part.consumption_measure == 'Sähkö'">
+          {{ part?.consumption }} kwh
+        </p>
+        <p *ngIf="part.consumption_measure == 'Lämpö'">
+          {{ part?.consumption }} kwh
+        </p>
+        <p *ngIf="part.consumption_measure == 'Vesi'">
+          {{ part?.consumption }} m3
+        </p>
+        <p>{{ part?.consumption_measure }}</p>
+      </ion-card-content>
+    </ion-card>
+    >
+
+    <!--
+    <ion-card *ngFor="let year of years">
       <ion-card-header>
         <ion-card-title>Consumption data:</ion-card-title>
       </ion-card-header>
@@ -50,5 +78,6 @@
         Here the card content
       </ion-card-content>
     </ion-card>
+    -->
   </ion-label>
 </ion-content>
