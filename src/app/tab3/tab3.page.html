@@ -9,85 +9,9 @@
 <ion-content>
   <ion-button
     expand="block"
-    routerLink="/tabs/tab3/maptest"
+    routerLink="/tabs/tab3/map-page"
     routerDirection="forward"
   >
-    MAPTEST
+    Go to map
   </ion-button>
-  <ion-button (click)="getEstates()">
-    Get estates to console
-  </ion-button>
-  <ion-button (click)="getEstates(629101)">
-    Get estate details for 629101 to console
-  </ion-button>
-
-  <ion-button (click)="getYears()">
-    Get years to console
-  </ion-button>
-  <ion-button (click)="getYears(2016, null)">
-    Get years 2016 to console
-  </ion-button>
-  <ion-button (click)="getYears(null, 629101)">
-    Get year details for 629101 to console
-  </ion-button>
-  <ion-button (click)="getYears(2016, 629101)">
-    Get year details for 629101 to console
-  </ion-button>
-
-  <ion-button (click)="getMonths()">
-    Get months to console
-  </ion-button>
-  <ion-button (click)="getMonths(2016, null)">
-    Get months for 2016 to console
-  </ion-button>
-  <ion-button (click)="getMonths(null, 608901)">
-    Get months for estate to console
-  </ion-button>
-  <ion-button (click)="getMonths(2016, 608901)">
-    Get months for year and estate to console
-  </ion-button>
-
-  <ion-button (click)="getHeatings()">
-    Get heatings to console
-  </ion-button>
-  <ion-button (click)="getHeatings(614002)">
-    Get heating for property 614002 to console
-  </ion-button>
-
-  <ion-button (click)="getUses()">
-    Get uses info to console
-  </ion-button>
-  <ion-button (click)="getUses(151)">
-    Get uses info with id to console
-  </ion-button>
-  <ion-item>
-    <ion-input type="string" name="id" [(ngModel)]="id"></ion-input>
-    <ion-button (click)="getInfos()">
-      getInfos function
-    </ion-button>
-  </ion-item>
-
-  <ion-button
-    expand="block"
-    routerLink="/tabs/search-by-district"
-    routerDirection="root"
-  >
-    Go to searchByDistrict
-  </ion-button>
-  <ion-input [(ngModel)]="value" clearInput>Enter input here</ion-input>
-  <p>Entered info = {{ value }}</p>
-  <ion-button
-    expand="block"
-    routerLink="/tabs/search-district"
-    routerDirection="root"
-  >
-    Go to searchDistrict
-  </ion-button>
-
-  <ion-list>
-    <ion-item *ngFor="let estate of modifiedData">
-      <p>{{ estate.property_name }}</p>
-      <p>{{ estate.property_id }}</p>
-    </ion-item>
-  </ion-list>
 </ion-content>

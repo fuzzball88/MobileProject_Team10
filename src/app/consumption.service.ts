@@ -47,7 +47,9 @@ export class ConsumptionService implements OnInit {
 
   constructor(private http: HttpClient) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log("Consumption service NgOnInit here!");
+  }
 
   public ResetActiveSelections() {
     this.activeDistrict = null;
@@ -91,6 +93,24 @@ export class ConsumptionService implements OnInit {
   //Get estates
   //Without parameter return all estates
   //With id parameter certain estate details
+  getPromiseEstates(id?: string) {
+    let address = ESTATE_INFO;
+    if (id) {
+      address = ESTATE_INFO + "?property_id=eq." + id;
+    }
+    return new Promise(resolve => {
+      this.http.get(address).subscribe(
+        (data: any) => {
+          resolve(data);
+          console.log(data);
+        },
+        error => {
+          resolve(error);
+        }
+      );
+    });
+  }
+
   async getEstates(id?: string) {
     let address = ESTATE_INFO;
     if (id) {

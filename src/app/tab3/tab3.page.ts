@@ -1,6 +1,5 @@
 import { Component, ViewChild, ElementRef, OnInit } from "@angular/core";
 import { ConsumptionService } from "../consumption.service";
-//import { NavController } from "@ionic/angular";
 import leaflet from "leaflet";
 import { OpenStreetMapProvider } from "leaflet-geosearch";
 
@@ -32,8 +31,7 @@ export class Tab3Page implements OnInit {
 
   ngOnInit() {}
 
-  ionViewWillEnter() {}
-
+  /*
   //Get all estates or one if id is given
   getEstates(id?: string) {
     console.log(id);
@@ -136,4 +134,5 @@ export class Tab3Page implements OnInit {
     console.log(this.districts);
     console.log(this.purposes);
   }
+  */
 }

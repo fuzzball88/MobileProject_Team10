@@ -103,6 +103,36 @@ const routes: Routes = [
                 ]
               }
             ]
+          },
+          {
+            path: "map-page",
+            children: [
+              {
+                path: "",
+                loadChildren:
+                  "../pages/map-page/map-page.module#MapPagePageModule"
+              },
+              {
+                path: "estate-info-id/:id",
+                children: [
+                  {
+                    path: "",
+                    loadChildren:
+                      "../pages/estate-info-id/estate-info-id.module#EstateInfoIdPageModule"
+                  }
+                ]
+              },
+              {
+                path: "estate-info/:id",
+                children: [
+                  {
+                    path: "",
+                    loadChildren:
+                      "../pages/estate-info/estate-info.module#EstateInfoPageModule"
+                  }
+                ]
+              }
+            ]
           }
         ]
       },

@@ -49,6 +49,43 @@ export class MaptestPage implements OnInit {
     });
   }
 
+  whileMarkers() {
+    this.consumptionService.allEstates.forEach(async element => {
+      let estateData = {};
+      let coordinate = await this.searchEstateSync2(
+        element.property_address +
+          " " +
+          element.postal_code +
+          " " +
+          element.postal_area
+      );
+      /*
+      estateData["property_id"] = element.property_id;
+      estateData["property_name"] = element.property_name;
+      estateData["propert_address"] = element.property_address;
+      estateData["postal_code"] = element.postal_code;
+      estateData["postal_area"] = element.postal_area;
+      estateData["x"] = coordinate[0].x;
+      estateData["y"] = coordinate[0].y;
+        */
+      leaflet
+        .marker([coordinate[0].y, coordinate[0].x])
+        .addTo(this.map)
+        .bindPopup(
+          "<h1>" +
+            element.property_name +
+            '</h1></br><ion-button class="marker-link" href="/tabs/tab3/maptest/estate-info-id/' +
+            element.property_id +
+            '">Open</ion-button>'
+        )
+        .on("click", this.onClick);
+    });
+  }
+
+  async searchEstateSync2(address) {
+    return await provider.search({ query: address });
+  }
+
   searchAddress() {
     console.log(this.searchEstate());
     //this.testArray.push(this.searchEstate());
