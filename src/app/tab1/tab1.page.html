@@ -4,8 +4,9 @@
   <ion-label>
     <ion-title class="title" text-center style="padding-bottom: 16px"
       ><b>Oulu's real estates' consumption data</b>
-      <b style="color:aqua"> {{ numberOfEstates }} estate data</b></ion-title
-    >
+      <b style="color:aqua"> {{ numberOfEstates }} estate data</b>
+      <b small (click)="saveAllEstates()">Click here if estate data is 0</b>
+    </ion-title>
   </ion-label>
   <ion-card class="card">
     <ion-card-header>

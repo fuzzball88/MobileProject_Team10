@@ -12,8 +12,8 @@ const provider = new OpenStreetMapProvider();
   styleUrls: ["./estate-info.page.scss"]
 })
 export class EstateInfoPage {
-  @ViewChild("estate-map") mapContainer: ElementRef;
-  map: any;
+  @ViewChild("estate_map") mapContainer: ElementRef;
+  estate_map: any;
   urlId = null;
   estateId: string = null;
   selectedEstate: any;
@@ -65,8 +65,8 @@ export class EstateInfoPage {
   }
 
   ionViewWillLeave() {
-    this.map.off();
-    this.map.remove();
+    this.estate_map.off();
+    this.estate_map.remove();
   }
 
   printWanted() {
@@ -135,7 +135,7 @@ export class EstateInfoPage {
   }
 
   loadmap() {
-    this.map = leaflet.map("estate-map").fitWorld();
+    this.estate_map = leaflet.map("estate_map").fitWorld();
     leaflet
       .tileLayer(
         "https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}",
@@ -147,9 +147,9 @@ export class EstateInfoPage {
           accessToken: this.myToken
         }
       )
-      .addTo(this.map);
+      .addTo(this.estate_map);
 
-    this.map
+    this.estate_map
       .locate({
         setView: true,
         maxZoom: 10
@@ -163,7 +163,7 @@ export class EstateInfoPage {
             alert("You are here");
           });
         markerGroup.addLayer(marker);
-        this.map.addLayer(markerGroup);
+        this.estate_map.addLayer(markerGroup);
       })
       .on("locationerror", err => {
         alert(err.message);

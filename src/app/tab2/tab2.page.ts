@@ -26,6 +26,10 @@ export class Tab2Page implements OnInit {
     //console.log(this.districts);
   }
 
+  ionViewWillEnter() {
+    this.GetObjEstates();
+  }
+
   GetObjEstates() {
     this.consumptionService.GetObservableEstates().subscribe(data => {
       console.log(data);

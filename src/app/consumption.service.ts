@@ -90,6 +90,14 @@ export class ConsumptionService implements OnInit {
     return this.http.get(address);
   }
 
+  public getObservableUses(id?: string): Observable<any> {
+    let address = USE_INFO;
+    if (id) {
+      address = ESTATE_INFO + "?intended_use=like." + id + "%";
+    }
+    return this.http.get(address);
+  }
+
   //Get estates
   //Without parameter return all estates
   //With id parameter certain estate details
