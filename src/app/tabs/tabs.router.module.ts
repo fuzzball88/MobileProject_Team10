@@ -63,6 +63,26 @@ const routes: Routes = [
                 ]
               }
             ]
+          },
+          {
+            path: "search-intended-use",
+            children: [
+              {
+                path: "",
+                loadChildren:
+                  "../pages/search-intended-use/search-intended-use.module#SearchIntendedUsePageModule"
+              },
+              {
+                path: "search-by-intended-use",
+                children: [
+                  {
+                    path: "",
+                    loadChildren:
+                      "../pages/search-by-intended-use/search-by-intended-use.module#SearchByIntendedUsePageModule"
+                  }
+                ]
+              }
+            ]
           }
           ///
         ]

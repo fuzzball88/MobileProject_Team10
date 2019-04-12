@@ -39,6 +39,7 @@ export class ConsumptionService implements OnInit {
   activeDistrict: string = null;
   activeEstateId: string = null;
   activeEstate: any;
+  activeUse: string = null;
   activeEstateYearlyConsumption: any;
   mapEstates: string[] = [];
   allDistricts: string[] = [];
@@ -87,6 +88,21 @@ export class ConsumptionService implements OnInit {
     } else if (year && !id) {
       address += "?year=eq." + year;
     }
+    return this.http.get(address);
+  }
+
+  public GetObservableUses(id?: string): Observable<any> {
+    let address = USE_INFO;
+    if (id) {
+      address = USE_INFO + "?intended_use=like." + id + "%";
+      console.log(address);
+    }
+      return this.http.get(address);
+  }
+  public GetObservablesUsesID(id: string): Observable<any> {
+    
+    let address = ESTATE_INFO + "?intended_use=like." + id + "%";
+    console.log(address);
     return this.http.get(address);
   }
 
