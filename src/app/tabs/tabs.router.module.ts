@@ -79,6 +79,26 @@ const routes: Routes = [
                     path: "",
                     loadChildren:
                       "../pages/search-by-intended-use/search-by-intended-use.module#SearchByIntendedUsePageModule"
+                  },
+                  {
+                    path: "estate-info",
+                    children: [
+                      {
+                        path: "",
+                        loadChildren:
+                          "../pages/estate-info/estate-info.module#EstateInfoPageModule"
+                      }
+                    ]
+                  },
+                  {
+                    path: "estate-info/:id",
+                    children: [
+                      {
+                        path: "",
+                        loadChildren:
+                          "../pages/estate-info/estate-info.module#EstateInfoPageModule"
+                      }
+                    ]
                   }
                 ]
               }

@@ -26,6 +26,10 @@ export class SearchByIntendedUsePage implements OnInit {
       });
   }
 
-
+  UpdateActiveEstate(id: string) {
+    this.consumptionService.activeEstateId = id;
+    this.consumptionService.GetObjEstate(id);
+    console.log(this.consumptionService.activeEstateId);
+  }
 
 }
