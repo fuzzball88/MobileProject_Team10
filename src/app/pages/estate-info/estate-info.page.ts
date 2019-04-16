@@ -163,11 +163,25 @@ export class EstateInfoPage {
     console.log(this.years);
   }
 
+  /*
   async searchEstateSync(address) {
     console.log("SearchEstateSync works now");
-    return await provider.search({ query: address });
-  }
+    await provider
+      .search({ query: address })
+      .then(function(result) {
+        console.log(result);
+        this.presentAlert();
+      })
+      .catch(function(error) {
+        console.log(error);
+        this.presentAlert();
+      });
 
+    //this.openMap(coordinate[0].y, coordinate[0].x);
+  }
+  */
+
+  /*
   async getCoordinates() {
     let coordinate = await this.searchEstateSync(
       this.selectedEstate[0].property_address +
@@ -179,6 +193,30 @@ export class EstateInfoPage {
     console.log("Coordinates come now");
     console.log(coordinate);
   }
+  */
+
+  /*
+  forMap() {
+    this.selectedEstate.forEach(async element => {
+      this.searchEstateSync(
+        element.property_address +
+          " " +
+          element.postal_code +
+          " " +
+          element.postal_area
+      );
+      /*
+      coordinate
+        .then(response => console.log("Working response", response))
+        .catch(err => console.log("Now came and error", err));
+        
+    });
+  }
+  */
+  async searchEstateSync(address) {
+    console.log("SearchEstateSync works now");
+    return await provider.search({ query: address });
+  }
 
   forMap() {
     this.selectedEstate.forEach(async element => {
@@ -189,29 +227,20 @@ export class EstateInfoPage {
           " " +
           element.postal_area
       );
-      coordinate.then(
-        result => console.log(result),
-        error => console.log(error)
-      );
-    });
-  }
-  /*
-    this.selectedEstate.forEach(async element => {
-      let coordinate = await this.searchEstateSync(
-        element.property_address +
-          " " +
-          element.postal_code +
-          " " +
-          element.postal_area
-      );
-      console.log(coordinate[0]);
-      if ((coordinate[0] = undefined)) {
+      console.log(coordinate);
+      if (
+        typeof coordinate != "undefined" &&
+        coordinate != null &&
+        coordinate.length != null &&
+        coordinate.length > 0
+      ) {
+        console.log("Shaibaa");
+        this.openMap(coordinate[0].y, coordinate[0].x);
+      } else {
         this.presentAlert();
       }
-      this.openMap(coordinate[0].y, coordinate[0].x);
     });
   }
-  */
 
   //Creates an object of the yearly consumption data
   /*
