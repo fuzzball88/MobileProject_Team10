@@ -17,7 +17,7 @@ export class SearchIntendedUsePage implements OnInit {
   }
 
   GetObjUses() {
-    this.consumptionService.GetObservableUses().subscribe(data => {
+    this.consumptionService.GetObservableUses1().subscribe(data => {
       console.log(data);
       this.estateData = data;
       for (let i = 0; i < this.estateData.length; i++) {

@@ -91,7 +91,7 @@ export class ConsumptionService implements OnInit {
     return this.http.get(address);
   }
 
-  public GetObservableUses(id?: string): Observable<any> {
+  public GetObservableUses1(id?: string): Observable<any> {
     let address = USE_INFO;
     if (id) {
       address = USE_INFO + "?intended_use=like." + id + "%";
@@ -103,6 +103,14 @@ export class ConsumptionService implements OnInit {
     
     let address = ESTATE_INFO + "?intended_use=like." + id + "%";
     console.log(address);
+    return this.http.get(address);
+  }    
+
+  public getObservableUses(id?: string): Observable<any> {
+    let address = USE_INFO;
+    if (id) {
+      address = ESTATE_INFO + "?intended_use=like." + id + "%";
+    }
     return this.http.get(address);
   }
 

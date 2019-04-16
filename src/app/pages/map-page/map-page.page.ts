@@ -42,7 +42,7 @@ export class MapPagePage implements OnInit {
   }
 
   ionViewWillLeave() {
-    //this.map.off();
+    this.map.off();
     //this.map.remove();
   }
 
@@ -64,16 +64,26 @@ export class MapPagePage implements OnInit {
       estateData["x"] = coordinate[0].x;
       estateData["y"] = coordinate[0].y;
         */
-      leaflet
-        .marker([coordinate[0].y, coordinate[0].x])
-        .addTo(this.map)
-        .bindPopup(
-          "<h1>" +
-            element.property_name +
-            '</h1></br><ion-button class="marker-link" href="/tabs/tab3/map-page/estate-info-id/' +
-            element.property_id +
-            '">Open</ion-button>'
-        );
+
+      if (
+        typeof coordinate != "undefined" &&
+        coordinate != null &&
+        coordinate.length != null &&
+        coordinate.length > 0
+      ) {
+        leaflet
+          .marker([coordinate[0].y, coordinate[0].x])
+          .addTo(this.map)
+          .bindPopup(
+            "<h1>" +
+              element.property_name +
+              '</h1></br><ion-button class="marker-link" href="/tabs/tab3/map-page/estate-info-id/' +
+              element.property_id +
+              '">Open</ion-button>'
+          );
+      } else {
+        console.log("Error with coordinates");
+      }
     });
   }
 

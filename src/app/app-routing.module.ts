@@ -16,11 +16,13 @@ const routes: Routes = [
   {
     path: "estate-info",
     loadChildren: "./pages/estate-info/estate-info.module#EstateInfoPageModule"
-  },  { path: 'maptest', loadChildren: './pages/maptest/maptest.module#MaptestPageModule' },
+  },
+  { path: 'maptest', loadChildren: './pages/maptest/maptest.module#MaptestPageModule' },
   { path: 'map-page', loadChildren: './pages/map-page/map-page.module#MapPagePageModule' },
   { path: 'search-intended-use', loadChildren: './pages/search-intended-use/search-intended-use.module#SearchIntendedUsePageModule' },
   { path: 'search-by-intended-use', loadChildren: './pages/search-by-intended-use/search-by-intended-use.module#SearchByIntendedUsePageModule' },
-  { path: 'search-building', loadChildren: './pages/search-building/search-building.module#SearchBuildingPageModule' }
+  { path: 'search-building', loadChildren: './pages/search-building/search-building.module#SearchBuildingPageModule' },
+  { path: 'overmap', loadChildren: './pages/overmap/overmap.module#OvermapPageModule' }
 
 ];
 @NgModule({

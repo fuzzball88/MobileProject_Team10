@@ -15,11 +15,13 @@ export class SearchDistrictPage implements OnInit {
   constructor(private consumptionService: ConsumptionService) {}
 
   ngOnInit() {
+    /*
     //Test to assign estatedata from services
 
     this.GetObjEstates();
     this.estateData = this.consumptionService.allEstates;
     this.UpdateDistricts();
+    */
   }
 
   ionViewWillEnter() {

@@ -1,8 +1,10 @@
 import { Component, ViewChild, ElementRef, OnInit } from "@angular/core";
 import leaflet from "leaflet";
+import { ModalController, AlertController } from "@ionic/angular";
 import { ConsumptionService } from "../../consumption.service";
 import { ActivatedRoute } from "@angular/router";
 import { OpenStreetMapProvider } from "leaflet-geosearch";
+import { OvermapPage } from "../overmap/overmap.page";
 
 const provider = new OpenStreetMapProvider();
 
@@ -12,8 +14,8 @@ const provider = new OpenStreetMapProvider();
   styleUrls: ["./estate-info.page.scss"]
 })
 export class EstateInfoPage {
-  @ViewChild("estate-map") mapContainer: ElementRef;
-  map: any;
+  @ViewChild("estate_map") mapContainer: ElementRef;
+  estate_map: any;
   urlId = null;
   estateId: string = null;
   selectedEstate: any;
@@ -24,10 +26,13 @@ export class EstateInfoPage {
   years: string[] = [];
   myToken: string =
     "pk.eyJ1IjoiZnV6emJhbGw4OCIsImEiOiJjanRzaWFvMmswd2VnNGRvN29paTJtaHQzIn0.rwgnQNkKUE2I5YC75g3nqw";
+  coordinates: any;
 
   constructor(
     private consumptionService: ConsumptionService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private modalController: ModalController,
+    private alertController: AlertController
   ) {}
 
   /*
@@ -54,19 +59,42 @@ export class EstateInfoPage {
     } else {
       this.estateId = this.urlId;
     }
+    console.log("Estate id has been selected");
     console.log(this.estateId);
+    //this.selectedEstate = this.consumptionService.getEstates(this.estateId);
     this.consumptionService.activeEstateId = this.estateId;
     this.GetObjEstates(this.estateId);
     this.GetObjConsumption(null, this.estateId);
-    this.loadmap();
-    this.getCoordinates();
+    //this.loadmap();
 
     //this.UpdateYears();
   }
 
   ionViewWillLeave() {
-    this.map.off();
-    this.map.remove();
+    //this.estate_map.off();
+    //this.estate_map.remove();
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: "Address cannot be found",
+      message: "The address of this estate cannot be shown.",
+      buttons: ["OK"]
+    });
+
+    await alert.present();
+  }
+
+  async openMap(y, x) {
+    const modal = await this.modalController.create({
+      component: OvermapPage,
+      componentProps: {
+        y: y,
+        x: x
+        //mapcoordinates: this.coordinates
+      }
+    });
+    modal.present();
   }
 
   printWanted() {
@@ -76,6 +104,7 @@ export class EstateInfoPage {
   async GetObjEstates(id: string) {
     this.selectedEstate = await this.consumptionService.getEstates(id);
     console.log(this.selectedEstate);
+    console.log(this.selectedEstate[0].property_address);
   }
   /*
   GetObjEstates(id: string) {
@@ -134,59 +163,83 @@ export class EstateInfoPage {
     console.log(this.years);
   }
 
-  loadmap() {
-    this.map = leaflet.map("estate-map").fitWorld();
-    leaflet
-      .tileLayer(
-        "https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}",
-        {
-          attribution:
-            'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-          maxZoom: 18,
-          id: "mapbox.streets",
-          accessToken: this.myToken
-        }
-      )
-      .addTo(this.map);
-
-    this.map
-      .locate({
-        setView: true,
-        maxZoom: 10
-      })
-      .on("locationfound", e => {
-        console.log("found you");
-        let markerGroup = leaflet.featureGroup();
-        let marker: any = leaflet
-          .marker([e.latitude, e.longitude])
-          .on("click", () => {
-            alert("You are here");
-          });
-        markerGroup.addLayer(marker);
-        this.map.addLayer(markerGroup);
-      })
-      .on("locationerror", err => {
-        alert(err.message);
-      });
-  }
-
+  /*
   async searchEstateSync(address) {
-    const results = await provider.search({ query: address });
-    //this.testResult = results;
-    //console.log(results);
-    return results;
-  }
+    console.log("SearchEstateSync works now");
+    await provider
+      .search({ query: address })
+      .then(function(result) {
+        console.log(result);
+        this.presentAlert();
+      })
+      .catch(function(error) {
+        console.log(error);
+        this.presentAlert();
+      });
 
+    //this.openMap(coordinate[0].y, coordinate[0].x);
+  }
+  */
+
+  /*
   async getCoordinates() {
     let coordinate = await this.searchEstateSync(
-      this.selectedEstate.property_address +
+      this.selectedEstate[0].property_address +
         " " +
-        this.selectedEstate.postal_code +
+        this.selectedEstate[0].postal_code +
         " " +
-        this.selectedEstate.postal_area
+        this.selectedEstate[0].postal_area
     );
-    console.log("Now comes the coordinates");
+    console.log("Coordinates come now");
     console.log(coordinate);
+  }
+  */
+
+  /*
+  forMap() {
+    this.selectedEstate.forEach(async element => {
+      this.searchEstateSync(
+        element.property_address +
+          " " +
+          element.postal_code +
+          " " +
+          element.postal_area
+      );
+      /*
+      coordinate
+        .then(response => console.log("Working response", response))
+        .catch(err => console.log("Now came and error", err));
+        
+    });
+  }
+  */
+  async searchEstateSync(address) {
+    console.log("SearchEstateSync works now");
+    return await provider.search({ query: address });
+  }
+
+  forMap() {
+    this.selectedEstate.forEach(async element => {
+      let coordinate = await this.searchEstateSync(
+        element.property_address +
+          " " +
+          element.postal_code +
+          " " +
+          element.postal_area
+      );
+      console.log(coordinate);
+      if (
+        typeof coordinate != "undefined" &&
+        coordinate != null &&
+        coordinate.length != null &&
+        coordinate.length > 0
+      ) {
+        console.log("Shaibaa");
+        this.openMap(coordinate[0].y, coordinate[0].x);
+      } else {
+        this.presentAlert();
+      }
+    });
   }
 
   //Creates an object of the yearly consumption data

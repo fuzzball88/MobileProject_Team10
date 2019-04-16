@@ -35,10 +35,10 @@
         <p>Building year: {{ estate?.year_built }}</p>
         <br />
         <p>Renovation year: {{ estate?.year_renovated }}</p>
-        <div id="estate-map" style="width:100px; height:100px;"></div>
+        <ion-button expand="full" (click)="forMap()">Open Map </ion-button>
       </ion-card-content>
     </ion-card>
-
+    <!--<div id="estate_map" style="width:50%; height:50%;"></div>-->
     <ion-card *ngFor="let year of years">
       <ion-card-header>
         <ion-card-title>Vuosi {{ year[0].year }}</ion-card-title>
@@ -57,7 +57,10 @@
         <p>{{ part?.consumption_measure }}</p>
       </ion-card-content>
     </ion-card>
+<<<<<<< HEAD
     
+=======
+>>>>>>> 28cee0d949aedfb994b89d80a035ed820be458e4
 
     <!--
       <ion-card *ngFor="let year of years">

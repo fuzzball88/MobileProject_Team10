@@ -12,6 +12,9 @@ export class Tab1Page implements OnInit {
   ngOnInit() {
     this.saveAllEstates();
   }
+  ionViewWillEnter() {
+    this.saveAllEstates();
+  }
 
   constructor(private consumptionService: ConsumptionService) {}
 

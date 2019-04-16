@@ -1,24 +1,37 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, ViewChild, ElementRef, OnInit } from "@angular/core";
+import leaflet from "leaflet";
+import { ModalController, AlertController } from "@ionic/angular";
 import { ConsumptionService } from "../../consumption.service";
 import { ActivatedRoute } from "@angular/router";
+import { OpenStreetMapProvider } from "leaflet-geosearch";
+import { OvermapPage } from "../overmap/overmap.page";
 
+const provider = new OpenStreetMapProvider();
 @Component({
   selector: "app-estate-info-id",
   templateUrl: "./estate-info-id.page.html",
   styleUrls: ["./estate-info-id.page.scss"]
 })
 export class EstateInfoIdPage {
+  @ViewChild("estate_map") mapContainer: ElementRef;
+  estate_map: any;
   urlId = null;
   estateId: string = null;
   selectedEstate: any;
+  estateData: any;
   yearsConsumption: any;
   iterationYears: number[] = [];
   iterationYear: string[] = [];
   years: string[] = [];
+  myToken: string =
+    "pk.eyJ1IjoiZnV6emJhbGw4OCIsImEiOiJjanRzaWFvMmswd2VnNGRvN29paTJtaHQzIn0.rwgnQNkKUE2I5YC75g3nqw";
+  coordinates: any;
 
   constructor(
     private consumptionService: ConsumptionService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private modalController: ModalController,
+    private alertController: AlertController
   ) {}
 
   /*
@@ -62,6 +75,57 @@ export class EstateInfoIdPage {
     this.iterationYear = null;
     this.years = null;
     */
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: "Address cannot be found",
+      message: "The address of this estate cannot be shown.",
+      buttons: ["OK"]
+    });
+
+    await alert.present();
+  }
+
+  async openMap(y, x) {
+    const modal = await this.modalController.create({
+      component: OvermapPage,
+      componentProps: {
+        y: y,
+        x: x
+        //mapcoordinates: this.coordinates
+      }
+    });
+    modal.present();
+  }
+
+  async searchEstateSync(address) {
+    console.log("SearchEstateSync works now");
+    return await provider.search({ query: address });
+  }
+
+  forMap() {
+    this.selectedEstate.forEach(async element => {
+      let coordinate = await this.searchEstateSync(
+        element.property_address +
+          " " +
+          element.postal_code +
+          " " +
+          element.postal_area
+      );
+      console.log(coordinate);
+      if (
+        typeof coordinate != "undefined" &&
+        coordinate != null &&
+        coordinate.length != null &&
+        coordinate.length > 0
+      ) {
+        console.log("Shaibaa");
+        this.openMap(coordinate[0].y, coordinate[0].x);
+      } else {
+        this.presentAlert();
+      }
+    });
   }
 
   printWanted() {
