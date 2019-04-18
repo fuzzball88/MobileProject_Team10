@@ -1,5 +1,7 @@
 {
   "name": "practice",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
