@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-back-button>Back</ion-back-button>
+    <ion-title>search building</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-card>
+        <ion-searchbar [(ngModel)]="searchEstateString" (ionInput)="searchEstate($event)" showCancelButton placeholder="Start typing a name..." type="text"></ion-searchbar>
+        <ion-card-content *ngFor="let estate of estateData">
+          <ion-title>{{ estate.property_name }}</ion-title>
+          <p>{{ estate.property_id }}</p>
+          <ion-button
+          (click)="UpdateActiveEstate(estate.property_id)"
+          [routerLink]="['/tabs/tab2/search-building/estate-info/',
+          estate.property_id]"
+          routerDirection="forward"
+          >Choose</ion-button>
+        </ion-card-content>
+      </ion-card>
+</ion-content>

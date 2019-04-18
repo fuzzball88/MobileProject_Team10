@@ -14,4 +14,22 @@
   >
     Go to Search by district
   </ion-button>
+
+  <ion-button 
+  expand="block"
+  routerLink="/tabs/tab2/search-intended-use"
+  routerDirection="forward"
+  (click)="ResetSelections()"
+>
+  Go to Search by intended use
+</ion-button>
+
+<ion-button 
+expand="block"
+routerLink="/tabs/tab2/search-building"
+routerDirection="forward"
+(click)="ResetSelections()"
+>
+Go to Search by Buildings name
+</ion-button>
 </ion-content>

@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-back-button>Back</ion-back-button>
+    <ion-title>search by intended use</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-card>
+        <ion-card-content *ngFor="let uses of estateData">
+          <ion-title>{{ uses.property_name }}</ion-title>
+          <p>{{ uses.property_id }}</p>
+          <ion-button
+          (click)="UpdateActiveEstate(uses.property_id)"
+          [routerLink]="['/tabs/tab2/search-intended-use/search-by-intended-use/estate-info/',
+          uses.property_id]"
+          routerDirection="forward"
+          >Choose</ion-button>
+        </ion-card-content>
+      </ion-card>
+</ion-content>

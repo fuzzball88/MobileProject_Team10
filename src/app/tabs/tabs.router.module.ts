@@ -63,6 +63,76 @@ const routes: Routes = [
                 ]
               }
             ]
+          },
+          {
+            path: "search-intended-use",
+            children: [
+              {
+                path: "",
+                loadChildren:
+                  "../pages/search-intended-use/search-intended-use.module#SearchIntendedUsePageModule"
+              },
+              {
+                path: "search-by-intended-use",
+                children: [
+                  {
+                    path: "",
+                    loadChildren:
+                      "../pages/search-by-intended-use/search-by-intended-use.module#SearchByIntendedUsePageModule"
+                  },
+                  {
+                    path: "estate-info",
+                    children: [
+                      {
+                        path: "",
+                        loadChildren:
+                          "../pages/estate-info/estate-info.module#EstateInfoPageModule"
+                      }
+                    ]
+                  },
+                  {
+                    path: "estate-info/:id",
+                    children: [
+                      {
+                        path: "",
+                        loadChildren:
+                          "../pages/estate-info/estate-info.module#EstateInfoPageModule"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            path: "search-building",
+            children: [
+              {
+                path: "",
+                loadChildren:
+                  "../pages/search-building/search-building.module#SearchBuildingPageModule"
+              },
+                {
+                  path: "estate-info",
+                  children: [
+                    {
+                      path: "",
+                      loadChildren:
+                        "../pages/estate-info/estate-info.module#EstateInfoPageModule"
+                    }
+                  ]
+                },
+                {
+                  path: "estate-info/:id",
+                  children: [
+                    {
+                      path: "",
+                      loadChildren:
+                        "../pages/estate-info/estate-info.module#EstateInfoPageModule"
+                    }
+                  ]
+                }
+            ]
           }
           ///
         ]
