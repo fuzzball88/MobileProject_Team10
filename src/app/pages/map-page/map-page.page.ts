@@ -145,6 +145,6 @@ export class MapPagePage implements OnInit {
       .on("locationerror", err => {
         alert(err.message);
       });
-    this.whileMarkers();
+    //this.whileMarkers();
   }
 }
