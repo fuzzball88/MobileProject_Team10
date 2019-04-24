@@ -27,23 +27,50 @@ export class MapPagePage implements OnInit {
   test: string = "Finland";
   testResult: any;
   testArray: any = [];
+  markerArray: any = [];
 
   constructor(private consumptionService: ConsumptionService) {}
 
   ngOnInit() {
+    console.log("ngoninitmappage");
+    console.log(this.consumptionService.allEstates);
+    /*
     this.consumptionService.GetObservableEstates().subscribe(data => {
       console.log(data);
       this.consumptionService.allEstates = data;
     });
+    */
   }
 
   ionViewWillEnter() {
     this.loadmap();
+    //this.createMarkerArray();
+    //this.whileMarkers();
+    this.addMarkers();
   }
 
   ionViewWillLeave() {
     this.map.off();
     //this.map.remove();
+  }
+
+  testTero() {
+    console.log(this.consumptionService.markerArray);
+  }
+
+  addMarkers() {
+    this.consumptionService.markerArray.forEach(element => {
+      leaflet
+        .marker(element.y, element.x)
+        .addTo(this.map)
+        .bindPopup(
+          "<h1>" +
+            element.name +
+            '</h1></br><ion-button class="marker-link" href="/tabs/tab3/map-page/estate-info-id/' +
+            element.id +
+            '">Open</ion-button>'
+        );
+    });
   }
 
   whileMarkers() {
@@ -81,6 +108,40 @@ export class MapPagePage implements OnInit {
               element.property_id +
               '">Open</ion-button>'
           );
+      } else {
+        console.log("Error with coordinates");
+      }
+    });
+  }
+
+  createMarkerArray() {
+    this.consumptionService.allEstates.forEach(async element => {
+      let elementData = {
+        x: Number,
+        y: Number,
+        name: String,
+        id: String
+      };
+      let coordinate = await this.searchEstateSync2(
+        element.property_address +
+          " " +
+          element.postal_code +
+          " " +
+          element.postal_area
+      );
+
+      if (
+        typeof coordinate != "undefined" &&
+        coordinate != null &&
+        coordinate.length != null &&
+        coordinate.length > 0
+      ) {
+        elementData.x = coordinate[0].x;
+        elementData.y = coordinate[0].y;
+        elementData.name = element.property_name;
+        elementData.id = element.property_id;
+
+        this.consumptionService.markerArray.push(elementData);
       } else {
         console.log("Error with coordinates");
       }
@@ -145,6 +206,6 @@ export class MapPagePage implements OnInit {
       .on("locationerror", err => {
         alert(err.message);
       });
-    this.whileMarkers();
+    //this.whileMarkers();
   }
 }

@@ -45,6 +45,7 @@ export class ConsumptionService implements OnInit {
   allDistricts: string[] = [];
   allPurposes: string[] = [];
   allEstates: any;
+  markerArray: any = [];
 
   constructor(private http: HttpClient) {}
 
@@ -97,14 +98,13 @@ export class ConsumptionService implements OnInit {
       address = USE_INFO + "?intended_use=like." + id + "%";
       console.log(address);
     }
-      return this.http.get(address);
+    return this.http.get(address);
   }
   public GetObservablesUsesID(id: string): Observable<any> {
-    
     let address = ESTATE_INFO + "?intended_use=like." + id + "%";
     console.log(address);
     return this.http.get(address);
-  }    
+  }
 
   public getObservableUses(id?: string): Observable<any> {
     let address = USE_INFO;
