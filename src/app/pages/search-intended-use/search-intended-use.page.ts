@@ -1,19 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 import { ConsumptionService } from "../../consumption.service";
 
 @Component({
-  selector: 'app-search-intended-use',
-  templateUrl: './search-intended-use.page.html',
-  styleUrls: ['./search-intended-use.page.scss'],
+  selector: "app-search-intended-use",
+  templateUrl: "./search-intended-use.page.html",
+  styleUrls: ["./search-intended-use.page.scss"]
 })
 export class SearchIntendedUsePage implements OnInit {
-  
   estateData: any;
 
-  constructor(private consumptionService: ConsumptionService) { }
+  constructor(private consumptionService: ConsumptionService) {}
 
   ngOnInit() {
-  this.GetObjUses();
+    this.GetObjUses();
   }
 
   GetObjUses() {
@@ -22,6 +21,13 @@ export class SearchIntendedUsePage implements OnInit {
       this.estateData = data;
       for (let i = 0; i < this.estateData.length; i++) {
         console.log(this.estateData[i].intended_use);
+        this.estateData.sort((a, b) =>
+          a.intended_use > b.intended_use
+            ? 1
+            : b.intended_use > a.intended_use
+            ? -1
+            : 0
+        );
       }
     });
   }
@@ -30,5 +36,4 @@ export class SearchIntendedUsePage implements OnInit {
     this.consumptionService.activeUse = name;
     console.log(this.consumptionService.activeUse);
   }
-
 }

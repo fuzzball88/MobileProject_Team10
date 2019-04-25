@@ -44,6 +44,7 @@ export class SearchDistrictPage implements OnInit {
       }
     }
     console.log(this.districts);
+    this.districts.sort();
   }
 
   UpdateActiveDistrict(name: string) {
