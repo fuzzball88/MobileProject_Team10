@@ -3,3 +3,7 @@ div {
   display: block;
   width: auto !important;
 }
+.button {
+  --background: var(--ion-color-purple);
+  --background-activated: var(--ion-color-lightblue2);
+}
